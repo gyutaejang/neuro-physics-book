@@ -1,0 +1,23 @@
+{
+  "series": "뇌를 읽는 이공계 기초 · 방법론 1",
+  "title": "뇌를 읽는 방법론 1",
+  "subtitle": "뇌영상과 뇌파 분석: 전처리에서 통계적 추론과 재현성까지",
+  "audience": "신경과학과 임상 신경심리학 연구자를 위해 썼다. 물리·화학·생리 네 권에서 쌓은 신호의 원리 위에서 MRI, fMRI, 확산 MRI, PET, EEG/MEG 데이터를 실제로 처리하고 통계로 판단하는 방법을 익혀, 분석 파이프라인을 스스로 설계하고 방법 절을 비판적으로 읽을 수 있게 하는 것이 목표다.",
+  "version": "초판 작업본 · 2026",
+  "chapters": [
+    "00-preface.md",
+    "01-data-formats-and-coordinates.md",
+    "02-statistics-refresher.md",
+    "03-structural-mri-analysis.md",
+    "04-fmri-preprocessing.md",
+    "05-fmri-glm.md",
+    "06-multiple-comparisons-and-inference.md",
+    "07-functional-connectivity-and-networks.md",
+    "08-diffusion-mri-analysis.md",
+    "09-eeg-meg-preprocessing.md",
+    "10-erp-and-time-frequency.md",
+    "11-eeg-meg-connectivity-and-source-analysis.md",
+    "12-pet-analysis-and-multimodal.md",
+    "13-machine-learning-and-reproducibility.md"
+  ]
+}
