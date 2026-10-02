@@ -1,0 +1,19 @@
+{
+  "series": "뇌를 읽는 이공계 기초 · 화학 1",
+  "title": "뇌를 읽는 화학 1",
+  "subtitle": "생명을 위한 일반화학: 원자에서 신경전달물질까지",
+  "audience": "신경과학과 임상 신경심리학 연구자를 위해 썼다. 고등학교 이후 화학을 손에서 놓은 독자가 이온과 용액, 평형과 pH, 산화환원, 생체분자를 다시 쌓아 생리학과 뇌영상(MRS, PET, BOLD)의 화학적 바탕을 스스로 읽을 수 있게 하는 것이 목표다.",
+  "version": "초판 작업본 · 2026",
+  "chapters": [
+    "00-preface.md",
+    "01-atoms-and-elements.md",
+    "02-bonds-and-molecules.md",
+    "03-water-and-intermolecular-forces.md",
+    "04-solutions-and-osmosis.md",
+    "05-reactions-and-free-energy.md",
+    "06-equilibrium-and-binding.md",
+    "07-acids-bases-and-ph.md",
+    "08-redox-and-oxygen.md",
+    "09-biomolecules-and-neurotransmitters.md"
+  ]
+}

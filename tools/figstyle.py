@@ -92,3 +92,47 @@ def log_scale_map(items, xlabel, xlim, figsize=(7, 3.2), color=None, ticks=None)
         ax.minorticks_off()
     ax.set_xlabel(xlabel)
     return fig, ax
+
+
+def molecule_image(smiles, size=(480, 360), highlight=None):
+    """SMILES를 RDKit으로 그려 imshow로 올릴 수 있는 RGBA 배열로 돌려준다.
+
+    highlight: 강조할 원자 번호 목록(SMILES에 나온 순서, 0부터).
+    """
+    import io
+
+    from PIL import Image
+    from rdkit import Chem
+    from rdkit.Chem.Draw import rdMolDraw2D
+
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        raise ValueError(f"SMILES를 읽지 못했다: {smiles}")
+    d = rdMolDraw2D.MolDraw2DCairo(*size)
+    opts = d.drawOptions()
+    opts.bondLineWidth = 2
+    opts.clearBackground = True
+    opts.padding = 0.08
+    kw = {}
+    if highlight:
+        kw = {"highlightAtoms": list(highlight),
+              "highlightAtomColors": {i: (1.0, 0.85, 0.7) for i in highlight}}
+    d.DrawMolecule(mol, **kw)
+    d.FinishDrawing()
+    return np.array(Image.open(io.BytesIO(d.GetDrawingText())).convert("RGBA"))
+
+
+def molecule_grid(items, ncols=3, cell=(2.4, 2.0), size=(480, 360)):
+    """[(SMILES, "한국어 이름"), ...]을 격자로 그린 그림을 돌려준다."""
+    n = len(items)
+    nrows = (n + ncols - 1) // ncols
+    fig, axes = plt.subplots(nrows, ncols, figsize=(cell[0] * ncols, cell[1] * nrows), squeeze=False)
+    for ax in axes.flat:
+        ax.axis("off")
+    for ax, item in zip(axes.flat, items):
+        smi, name = item[0], item[1]
+        hl = item[2] if len(item) > 2 else None
+        ax.imshow(molecule_image(smi, size, hl))
+        ax.set_title(name, fontsize=10)
+    fig.tight_layout()
+    return fig, axes

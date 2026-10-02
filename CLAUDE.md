@@ -93,6 +93,8 @@ python3 tools/build.py physics-1 --preview
 - 색은 `figstyle.C`만 쓰고, 같은 의미에는 책 전체에서 같은 색을 쓴다: 파랑은 주 데이터와 전기장, 빨강은 힘과 강조, 초록은 생물과 이온, 보라는 자기장과 스핀, 회색은 보조선.
 - 그림 안 글자는 한국어로 쓴다. 크기는 보통 `figsize=(6.5, 3)` 안팎이고, 패널 두세 개를 나란히 둘 때는 폭 7–7.5까지 쓴다.
 - 도식(화살표, 상자, 세포막 단면 등)도 matplotlib patches와 annotate로 그린다.
+- 분자 구조식은 손으로 그리지 말고 `figstyle.molecule_grid([(SMILES, "이름"), …])` 또는 `molecule_image(SMILES)`로 RDKit이 그리게 한다. SMILES는 PubChem 등 표준 구조와 대조해 확인한다.
+- 다른 권의 내용은 "물리 1권 6장"처럼 권과 장으로 가리킨다.
 
 ### 문체와 용어
 
