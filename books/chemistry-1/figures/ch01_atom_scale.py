@@ -37,7 +37,7 @@ a1.axis("off")
 items = [
     (1.7e-15, "양성자 지름 약 1.7 fm"),
     (5.5e-15, "탄소 원자핵 약 5 fm"),
-    (1.4e-14, "철 원자핵 약 10 fm"),
+    (1.0e-14, "철 원자핵 약 10 fm"),
     (1.06e-10, "수소 원자 약 0.1 nm"),
     (3.0e-10, "Na⁺ 이온, 물 분자 0.2–0.3 nm"),
     (5e-9, "세포막 두께 약 5 nm"),
@@ -46,10 +46,11 @@ a2.set_yscale("log")
 a2.set_ylim(5e-16, 3e-8)
 a2.set_xlim(0, 1)
 a2.axvline(0.12, color=C["gray"], lw=1.2)
+label_y = {1.0e-14: 1.5e-14, 5.5e-15: 4.6e-15}  # 가까운 두 점의 글자가 겹치지 않게 조금 벌린다
 for v, name in items:
     col = C["blue"] if v < 1e-12 else C["ink"]
     a2.scatter([0.12], [v], s=22, color=col, zorder=3)
-    a2.text(0.18, v, name, va="center", fontsize=8.5, color=col)
+    a2.text(0.18, label_y.get(v, v), name, va="center", fontsize=8.5, color=col)
 a2.annotate("", xy=(0.95, 1.06e-10), xytext=(0.95, 3e-15),
             arrowprops=dict(arrowstyle="<->", color=C["red"], lw=1))
 a2.text(0.9, 2e-12, "수만–10만 배\n(4–5자릿수)", ha="right", va="center", fontsize=8.5, color=C["red"])

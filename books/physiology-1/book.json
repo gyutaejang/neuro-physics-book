@@ -1,0 +1,20 @@
+{
+  "series": "뇌를 읽는 이공계 기초 · 생리 1",
+  "title": "뇌를 읽는 생리 1",
+  "subtitle": "뉴런에서 혈류까지: 뇌 신호와 영상 신호의 생리학",
+  "audience": "신경과학과 임상 신경심리학 연구자를 위해 썼다. 물리 1권과 화학 1권의 개념 위에서 막전위, 활동전위, 시냅스, 뇌 에너지 대사, 뇌혈류와 신경혈관 결합을 다시 쌓아, EEG/MEG/fMRI/PET/확산 MRI 신호가 생리적으로 무엇을 반영하는지 스스로 판단할 수 있게 하는 것이 목표다.",
+  "version": "초판 작업본 · 2026",
+  "chapters": [
+    "00-preface.md",
+    "01-cells-of-the-brain.md",
+    "02-membrane-transport-and-resting-potential.md",
+    "03-action-potential.md",
+    "04-synaptic-transmission.md",
+    "05-neurotransmitter-systems-and-plasticity.md",
+    "06-networks-rhythms-and-field-potentials.md",
+    "07-brain-energy-metabolism.md",
+    "08-cerebral-blood-flow.md",
+    "09-neurovascular-coupling-and-bold.md",
+    "10-csf-water-and-tissue-microstructure.md"
+  ]
+}
