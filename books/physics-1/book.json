@@ -1,0 +1,19 @@
+{
+  "series": "뇌를 읽는 이공계 기초 · 물리 1",
+  "title": "뇌를 읽는 물리 1",
+  "subtitle": "고전 물리와 전기: 중고등 물리에서 뇌영상의 문턱까지",
+  "audience": "신경과학과 임상 신경심리학 연구자를 위해 썼다. 고등학교 이후 물리를 손에서 놓은 독자가 막전위, EEG/MEG, TMS, 확산 MRI의 원리를 스스로 읽을 수 있을 때까지 끌어올리는 것이 목표다.",
+  "version": "초판 작업본 · 2026",
+  "chapters": [
+    "00-preface.md",
+    "01-units-and-scale.md",
+    "02-motion-and-force.md",
+    "03-energy.md",
+    "04-oscillations-and-waves.md",
+    "05-heat-and-diffusion.md",
+    "06-charge-field-potential.md",
+    "07-current-and-circuits.md",
+    "08-magnetism-and-induction.md",
+    "09-light.md"
+  ]
+}

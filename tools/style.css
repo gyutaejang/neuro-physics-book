@@ -1,0 +1,105 @@
+/* 인쇄용 교과서 스타일. A4, 본문 명조, 제목과 상자는 고딕. */
+:root {
+  --ink: #222;
+  --muted: #666;
+  --blue: #2563a8;
+  --red: #c2410c;
+  --green: #3f7f3a;
+  --purple: #6d4c9f;
+  --rule: #d6dce4;
+}
+@page { size: A4; }
+html { font-size: 10.5pt; }
+body {
+  font-family: "Noto Serif CJK KR", "Noto Serif CJK", serif;
+  color: var(--ink);
+  background: #fff;
+  line-height: 1.75;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  margin: 0;
+}
+h1, h2, h3, h4, figcaption, .admonition-title, table, nav, .cover {
+  font-family: "Noto Sans CJK KR", "Noto Sans CJK", sans-serif;
+}
+p { margin: 0.55em 0; text-align: justify; }
+strong { font-family: "Noto Sans CJK KR", sans-serif; font-weight: 700; }
+
+/* 표지 */
+.cover {
+  height: 247mm; display: flex; flex-direction: column; justify-content: center;
+  border-left: 6px solid var(--blue); padding-left: 14mm; page-break-after: always;
+}
+.cover .series { color: var(--blue); font-weight: 700; letter-spacing: 0.08em; font-size: 11pt; }
+.cover-title { font-size: 30pt; line-height: 1.25; margin: 0.4em 0 0.3em; border: 0; }
+.cover-sub { font-size: 14pt; color: var(--muted); }
+.cover-note { margin-top: 3em; font-size: 10pt; color: var(--muted); max-width: 120mm; line-height: 1.6; }
+.cover-ver { margin-top: auto; font-size: 9pt; color: var(--muted); }
+
+/* 차례 */
+.toc { page-break-after: always; }
+.toc ul { list-style: none; padding-left: 0; }
+.toc ul ul { padding-left: 1.4em; margin: 0.1em 0 0.5em; }
+.toc li.toc-ch > a { font-weight: 700; font-size: 11pt; }
+.toc li { margin: 0.15em 0; }
+.toc a { color: var(--ink); text-decoration: none; }
+.toc ul ul a { color: #444; font-size: 9.5pt; }
+
+/* 장, 절 */
+.chapter { page-break-before: always; }
+h1 {
+  font-size: 22pt; line-height: 1.3; margin: 0 0 0.8em; padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--blue);
+}
+h2 { font-size: 14pt; margin: 1.6em 0 0.5em; color: var(--blue); page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 1.3em 0 0.4em; page-break-after: avoid; }
+h4 { font-size: 10.5pt; margin: 1em 0 0.3em; }
+.chapter > blockquote:first-of-type {
+  border: 0; background: #f4f6f9; padding: 0.7em 1em; margin: 0 0 1.4em; color: #444; font-size: 9.8pt;
+}
+blockquote { border-left: 3px solid var(--rule); margin: 1em 0; padding: 0.1em 1em; color: #444; }
+ul, ol { padding-left: 1.6em; }
+li { margin: 0.2em 0; }
+a { color: var(--blue); }
+
+/* 그림 */
+figure { margin: 1.2em 0; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 100%; max-height: 105mm; }
+figcaption { font-size: 9pt; color: #444; text-align: left; margin: 0.4em 6mm 0; line-height: 1.5; }
+figcaption b { color: var(--blue); margin-right: 0.3em; }
+a.ref { color: var(--blue); text-decoration: none; }
+.badref, .matherr { background: #fdd; color: #900; }
+
+/* 표 */
+table { border-collapse: collapse; margin: 1em auto; font-size: 9pt; page-break-inside: avoid; }
+th, td { border-bottom: 1px solid var(--rule); padding: 0.35em 0.7em; text-align: left; vertical-align: top; }
+th { background: #eef2f7; border-bottom: 1.5px solid #9aa8b8; }
+
+/* 수식 */
+.katex { font-size: 1.05em; }
+div.arithmatex { margin: 0.8em 0; overflow-x: auto; }
+
+/* 상자: !!! 종류 "제목" */
+.admonition {
+  margin: 1.1em 0; padding: 0.5em 1em 0.6em; border-radius: 4px; page-break-inside: avoid;
+  border-left: 4px solid var(--blue); background: #f2f6fb; font-size: 9.8pt;
+}
+.admonition > p:last-child { margin-bottom: 0.1em; }
+.admonition-title { font-weight: 700; margin: 0.1em 0 0.3em !important; font-size: 10pt; }
+.admonition.neuro { border-color: var(--green); background: #f1f7ef; }
+.admonition.neuro .admonition-title { color: var(--green); }
+.admonition.neuro .admonition-title::before { content: "🧠 "; }
+.admonition.key { border-color: var(--blue); background: #eef4fb; }
+.admonition.key .admonition-title { color: var(--blue); }
+.admonition.example { border-color: #8a6d1f; background: #fbf8ee; }
+.admonition.example .admonition-title { color: #7a5e12; }
+.admonition.warning { border-color: var(--red); background: #fdf3ee; }
+.admonition.warning .admonition-title { color: var(--red); }
+.admonition.check { border-color: var(--purple); background: #f5f2fa; }
+.admonition.check .admonition-title { color: var(--purple); }
+.admonition.answer { border-color: var(--gray, #999); background: #f6f6f6; page-break-inside: auto; }
+.admonition.recall { border-color: #999; background: #fafafa; }
+.admonition.recall .admonition-title { color: #555; }
+.admonition.recall .admonition-title::before { content: "↺ "; }
+code { font-size: 0.9em; background: #f2f2f2; padding: 0 0.2em; border-radius: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.5em 0; }

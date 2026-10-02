@@ -1,0 +1,8 @@
+{
+  "name": "neuro-physics-book-tools",
+  "private": true,
+  "description": "KaTeX for offline math rendering in the PDF build",
+  "dependencies": {
+    "katex": "^0.16.22"
+  }
+}
