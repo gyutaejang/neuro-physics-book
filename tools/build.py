@@ -70,6 +70,8 @@ def number_figures(body, chap_no, book, fig_index):
         nonlocal count
         count += 1
         alt, src = m.group(1), m.group(2)
+        # 캡션(alt 텍스트)은 Markdown 수식 처리를 거치지 않으므로 $…$를 여기서 수식 칸으로 바꾼다.
+        alt = re.sub(r"\$([^$]+)\$", r'<span class="arithmatex">\\(\1\\)</span>', alt)
         key = os.path.splitext(os.path.basename(src))[0]
         label = f"{chap_no}.{count}" if chap_no else f"{count}"
         if fig_index.get(key) != label:
