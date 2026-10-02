@@ -1,0 +1,21 @@
+{
+  "series": "뇌를 읽는 이공계 기초 · 물리 2",
+  "title": "뇌를 읽는 물리 2",
+  "subtitle": "현대물리와 영상의 물리: 원자핵에서 k-공간까지",
+  "audience": "신경과학과 임상 신경심리학 연구자를 위해 썼다. 물리 1권, 화학 1권, 생리 1권 위에서 원자핵과 방사선, 스핀과 자기공명, 신호처리와 영상 재구성, EEG/MEG 역문제를 쌓아 MRI, fMRI, DTI, PET, CT의 방법론 논문을 스스로 읽고 비판할 수 있게 하는 것이 목표다.",
+  "version": "초판 작업본 · 2026",
+  "chapters": [
+    "00-preface.md",
+    "01-atoms-and-nuclei.md",
+    "02-radioactivity-and-radiation.md",
+    "03-pet-and-spect.md",
+    "04-x-rays-and-ct.md",
+    "05-spin-and-magnetic-resonance.md",
+    "06-relaxation.md",
+    "07-signals-and-fourier.md",
+    "08-mri-image-formation.md",
+    "09-pulse-sequences-contrast-artifacts.md",
+    "10-physics-of-fmri-diffusion-perfusion.md",
+    "11-eeg-meg-forward-inverse.md"
+  ]
+}
