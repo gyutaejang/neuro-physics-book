@@ -74,11 +74,11 @@ ax.text(0, -L / 4, "S", color="white", ha="center", va="center", fontsize=13, zo
 ax.text(0, -2.05, "바깥: N극에서 나와 S극으로", ha="center", va="top", fontsize=8.5, color=C["purple"])
 ax.set_title("(가) 막대자석", fontsize=10.5)
 
-# (나) 솔레노이드: 도선 단면 (오른쪽 ● 나옴, 왼쪽 × 들어감)
+# (나) 솔레노이드: 도선 단면 (왼쪽 ● 나옴, 오른쪽 × 들어감). 위에서 보아 시계 반대 방향 전류 → 안쪽 B는 위로
 ax = axes[1]
 for z0 in zs[::2]:
-    ax.plot([a], [z0], "o", ms=3.2, color=C["ink"], zorder=4)
-    ax.plot([-a], [z0], "x", ms=3.2, color=C["ink"], mew=1.0, zorder=4)
+    ax.plot([-a], [z0], "o", ms=3.2, color=C["ink"], zorder=4)
+    ax.plot([a], [z0], "x", ms=3.2, color=C["ink"], mew=1.0, zorder=4)
 for s in (-0.19, 0.0, 0.19):
     ax.annotate("", xy=(s, 0.25), xytext=(s, -0.15),
                 arrowprops=dict(arrowstyle="-|>", color=C["purple"], lw=1.2, mutation_scale=11))

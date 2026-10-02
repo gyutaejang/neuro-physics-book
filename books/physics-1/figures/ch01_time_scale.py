@@ -13,5 +13,5 @@ items = [
 ticks = [(1e-6, "1 μs"), (1e-3, "1 ms"), (1, "1 s"), (60, "1분"), (3600, "1시간"), (86400, "1일"),
          (86400 * 30, "1달")]
 fig, ax = log_scale_map(items, "시간 (로그 눈금)", (3e-7, 1e7), figsize=(7.5, 3.4), color=C["red"], ticks=ticks)
-ax.axvspan(1, 20, ymin=0.47, ymax=0.53, color=C["red"], alpha=0.12)
+ax.axvspan(1, 6, ymin=0.47, ymax=0.53, color=C["red"], alpha=0.12)
 save(fig, __file__)
