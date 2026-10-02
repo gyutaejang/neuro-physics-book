@@ -94,10 +94,12 @@ def log_scale_map(items, xlabel, xlim, figsize=(7, 3.2), color=None, ticks=None)
     return fig, ax
 
 
-def molecule_image(smiles, size=(480, 360), highlight=None):
+def molecule_image(smiles, size=(480, 360), highlight=None, trim=True, bond_px=None):
     """SMILES를 RDKit으로 그려 imshow로 올릴 수 있는 RGBA 배열로 돌려준다.
 
     highlight: 강조할 원자 번호 목록(SMILES에 나온 순서, 0부터).
+    trim: 분자 둘레의 빈 여백을 잘라 낸다(약간의 테두리는 남긴다).
+    bond_px: 결합 길이를 이 픽셀 수로 고정한다. 여러 분자를 같은 축척으로 그릴 때 쓴다.
     """
     import io
 
@@ -113,26 +115,50 @@ def molecule_image(smiles, size=(480, 360), highlight=None):
     opts.bondLineWidth = 2
     opts.clearBackground = True
     opts.padding = 0.08
+    opts.baseFontSize = 0.85  # 원자 글자를 기본(0.6)보다 키워 인쇄에서 읽히게 한다
+    if bond_px:
+        opts.fixedBondLength = bond_px
     kw = {}
     if highlight:
         kw = {"highlightAtoms": list(highlight),
               "highlightAtomColors": {i: (1.0, 0.85, 0.7) for i in highlight}}
     d.DrawMolecule(mol, **kw)
     d.FinishDrawing()
-    return np.array(Image.open(io.BytesIO(d.GetDrawingText())).convert("RGBA"))
+    img = np.array(Image.open(io.BytesIO(d.GetDrawingText())).convert("RGBA"))
+    if trim:
+        ink = np.where((img[..., :3] < 245).any(axis=2))
+        if ink[0].size:
+            pad = 12
+            r0, r1 = max(ink[0].min() - pad, 0), min(ink[0].max() + pad, img.shape[0])
+            c0, c1 = max(ink[1].min() - pad, 0), min(ink[1].max() + pad, img.shape[1])
+            img = img[r0:r1, c0:c1]
+    return img
 
 
-def molecule_grid(items, ncols=3, cell=(2.4, 2.0), size=(480, 360)):
-    """[(SMILES, "한국어 이름"), ...]을 격자로 그린 그림을 돌려준다."""
+def molecule_grid(items, ncols=3, cell=(2.4, 2.0), size=(900, 700), bond_px=28, same_scale=True):
+    """[(SMILES, "한국어 이름"[, 강조 원자]), ...]을 격자로 그린 그림을 돌려준다.
+
+    same_scale=True이면 모든 분자를 같은 결합 길이로 그려, 작은 분자가 부풀려 보이지 않게 한다.
+    """
     n = len(items)
     nrows = (n + ncols - 1) // ncols
+    imgs = [molecule_image(it[0], size, it[2] if len(it) > 2 else None,
+                           bond_px=bond_px if same_scale else None) for it in items]
+    H = max(im.shape[0] for im in imgs)
+    W = max(im.shape[1] for im in imgs)
     fig, axes = plt.subplots(nrows, ncols, figsize=(cell[0] * ncols, cell[1] * nrows), squeeze=False)
     for ax in axes.flat:
         ax.axis("off")
-    for ax, item in zip(axes.flat, items):
-        smi, name = item[0], item[1]
-        hl = item[2] if len(item) > 2 else None
-        ax.imshow(molecule_image(smi, size, hl))
-        ax.set_title(name, fontsize=10)
+    for ax, item, im in zip(axes.flat, items, imgs):
+        if same_scale:
+            h, w = im.shape[:2]
+            x0, y0 = (W - w) / 2, (H - h) / 2
+            ax.imshow(im, extent=(x0, x0 + w, y0 + h, y0))
+            ax.set_xlim(0, W)
+            ax.set_ylim(H, 0)
+            ax.set_aspect("equal")
+        else:
+            ax.imshow(im)
+        ax.set_title(item[1], fontsize=10)
     fig.tight_layout()
     return fig, axes
