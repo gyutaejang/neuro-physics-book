@@ -159,6 +159,9 @@ python3 tools/build.py physics-1 --preview
 | 정상 두개내압 / 뇌관류압 | 약 5–15 mmHg / CPP = MAP − ICP, 약 60–70 mmHg 이상 |
 | 압력 환산 | 1 mmHg ≈ 133 Pa, 1 cmH₂O ≈ 0.74 mmHg |
 | 머리 질량 | 약 4.5–5 kg |
+| 3 T 이완 시간 T1 | 백질 약 0.85 s, 회백질 약 1.35 s, 뇌척수액 약 4 s, 혈액 약 1.65 s |
+| 3 T 이완 시간 T2 / T2* | T2: 백질 약 75 ms, 회백질 약 95 ms, 뇌척수액 1 s 이상 / 회백질 T2* 약 40–60 ms (BOLD TE 약 30 ms) |
+| CMRO₂ | 약 3.3–3.5 mL O₂/100 g/분 |
 
 ## 커밋
 

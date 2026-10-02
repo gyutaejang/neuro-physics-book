@@ -1,0 +1,47 @@
+from figstyle import plt, np, save, C
+
+# 블로흐 방정식의 풀이: 90° 펄스 뒤 자화 벡터의 궤적.
+# (가) 실험실 좌표계. 보기 좋도록 세차를 아주 느리게, T2를 T1의 0.6배로 두었다.
+T1, T2, f = 1.0, 0.6, 1.2            # s, s, 바퀴/s (설명용 값)
+t = np.linspace(0, 5, 4000)
+Mx = np.sin(2 * np.pi * f * t) * np.exp(-t / T2)
+My = np.cos(2 * np.pi * f * t) * np.exp(-t / T2)
+Mz = 1 - np.exp(-t / T1)
+
+fig = plt.figure(figsize=(7.3, 3.2))
+ax = fig.add_subplot(1, 2, 1, projection="3d")
+ax.plot(Mx, My, Mz, color=C["purple"], lw=1.3)
+ax.plot([0, 0], [0, 0], [0, 1.1], color=C["gray"], lw=0.8)
+ax.quiver(0, 0, 0, 0, 1, 0, color=C["red"], lw=1.6, arrow_length_ratio=0.12)
+ax.scatter([0], [0], [Mz[-1]], color=C["blue"], s=18)
+ax.text(0, 1.05, 0.02, "시작", fontsize=8, color=C["red"])
+ax.text(0.12, 0.0, 0.92, "끝: $M_0$", fontsize=8, color=C["blue"])
+ax.text(-0.12, 0.0, 1.14, "$B_0$ 방향", fontsize=8.5, color=C["gray"])
+ax.set_xlim(-1, 1); ax.set_ylim(-1, 1); ax.set_zlim(0, 1.1)
+ax.set_xticks([-1, 0, 1]); ax.set_yticks([-1, 0, 1]); ax.set_zticks([0, 0.5, 1])
+ax.tick_params(labelsize=7, pad=0)
+ax.set_xlabel("$M_x$", fontsize=8, labelpad=-6)
+ax.set_ylabel("$M_y$", fontsize=8, labelpad=-6)
+ax.set_zlabel("$M_z$", fontsize=8, labelpad=-6)
+ax.view_init(elev=22, azim=-60)
+ax.set_title("(가) 실험실 좌표계 (설명용 값)", fontsize=9.5)
+
+# (나) 회전 좌표계, 3 T 회백질 실제 값
+T1g, T2g = 1.35, 0.095
+tt = np.logspace(-3, 1.2, 500)
+mxy = np.exp(-tt / T2g)
+mz = 1 - np.exp(-tt / T1g)
+a2 = fig.add_subplot(1, 2, 2)
+a2.semilogx(tt, mxy, color=C["purple"], label="$M_{xy}$ (T2 95 ms)")
+a2.semilogx(tt, mz, color=C["blue"], label="$M_z$ (T1 1.35 s)")
+a2.semilogx(tt, np.hypot(mxy, mz), color=C["red"], ls="--", lw=1.1, label="|M|")
+a2.set_xlim(1e-3, 15)
+a2.set_ylim(0, 1.08)
+a2.set_xticks([1e-3, 1e-2, 1e-1, 1, 10])
+a2.set_xticklabels(["1 ms", "10 ms", "0.1 s", "1 s", "10 s"])
+a2.set_xlabel("90° 펄스 뒤 시간 (로그 눈금)")
+a2.set_ylabel("$M / M_0$")
+a2.set_title("(나) 회전 좌표계, 3 T 회백질", fontsize=9.5)
+a2.legend(fontsize=8, loc="center left")
+fig.subplots_adjust(wspace=0.35)
+save(fig, __file__)
