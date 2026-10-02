@@ -123,7 +123,7 @@ def build(book, preview=False, only=None):
         m = re.match(r"(\d+)-", fname)
         n = int(m.group(1)) if m and int(m.group(1)) > 0 else None
         if os.path.exists(path):
-            imgs = re.findall(r"^!\[[^\]]*\]\(figures/([^)]+?)\.svg\)", open(path, encoding="utf-8").read(), re.M)
+            imgs = re.findall(r"^!\[.*\]\(figures/([^)]+?)\.svg\)\s*$", open(path, encoding="utf-8").read(), re.M)
             for k, key in enumerate(imgs, 1):
                 fig_index[key] = f"{n}.{k}" if n else f"{k}"
     chapters = []
