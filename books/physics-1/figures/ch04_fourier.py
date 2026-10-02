@@ -1,0 +1,27 @@
+from figstyle import plt, np, save, C
+
+t = np.linspace(0, 2, 2000)
+sq = np.sign(np.sin(2 * np.pi * t))
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.4, 2.9), gridspec_kw={"width_ratios": [1.6, 1]})
+a1.plot(t, sq, color=C["gray"], lw=1, ls=":")
+for nterm, col, lw in ((1, C["red"], 1.0), (3, C["green"], 1.0), (15, C["blue"], 1.3)):
+    s = sum(4 / (np.pi * k) * np.sin(2 * np.pi * k * t) for k in range(1, 2 * nterm, 2))
+    a1.plot(t, s, color=col, lw=lw, label=f"사인파 {nterm}개")
+a1.set_xlabel("시간 (주기 단위)")
+a1.set_yticks([-1, 0, 1])
+a1.set_ylim(-1.5, 1.9)
+a1.legend(fontsize=8, ncol=3, loc="upper center", handlelength=1.2, columnspacing=0.8)
+a1.set_title("사각파를 사인파로 쌓기", fontsize=10)
+
+k = np.arange(1, 16)
+amp = np.where(k % 2 == 1, 4 / (np.pi * k), 0)
+a2.vlines(k, 0, amp, color=C["blue"], lw=2)
+a2.plot(k[amp > 0], amp[amp > 0], "o", color=C["blue"], ms=3)
+a2.set_xlabel("주파수 (기본 주파수의 배수)")
+a2.set_ylabel("진폭")
+a2.set_xticks([1, 3, 5, 7, 9, 11, 13, 15])
+a2.set_title("진폭 스펙트럼", fontsize=10)
+a2.text(5.5, 1.0, "홀수 배만,\n진폭은 1/n로 준다", fontsize=8.5, color="#444")
+a2.set_ylim(0, 1.4)
+fig.tight_layout()
+save(fig, __file__)

@@ -72,7 +72,8 @@ def number_figures(body, chap_no, book, fig_index):
         alt, src = m.group(1), m.group(2)
         key = os.path.splitext(os.path.basename(src))[0]
         label = f"{chap_no}.{count}" if chap_no else f"{count}"
-        fig_index[key] = label
+        if fig_index.get(key) != label:
+            print(f"경고: {key} 번호 불일치 {fig_index.get(key)} vs {label}", file=sys.stderr)
         return (f'<figure id="fig-{key}"><img src="figures/{book}/{src}" alt="">'
                 f'<figcaption><b>그림 {label}</b> {alt}</figcaption></figure>')
 
@@ -112,7 +113,16 @@ def build(book, preview=False, only=None):
     failed = run_figures(book, build_dir, only)
 
     problems = [f"그림 스크립트 실패: {f}" for f in failed]
+    # 그림 번호는 책 전체 원고를 훑어 미리 정한다. --only 빌드에서도 다른 장 그림을 가리킬 수 있다.
     fig_index = {}
+    for fname in meta["chapters"]:
+        path = os.path.join(ROOT, "books", book, "chapters", fname)
+        m = re.match(r"(\d+)-", fname)
+        n = int(m.group(1)) if m and int(m.group(1)) > 0 else None
+        if os.path.exists(path):
+            imgs = re.findall(r"^!\[[^\]]*\]\(figures/([^)]+?)\.svg\)", open(path, encoding="utf-8").read(), re.M)
+            for k, key in enumerate(imgs, 1):
+                fig_index[key] = f"{n}.{k}" if n else f"{k}"
     chapters = []
     names = meta["chapters"]
     if only:
