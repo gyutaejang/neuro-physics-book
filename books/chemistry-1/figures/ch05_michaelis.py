@@ -1,0 +1,36 @@
+from figstyle import plt, np, save, C
+
+Km, Vmax = 1.0, 1.0
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.3, 3.0))
+
+S = np.linspace(0, 10, 400)
+v = Vmax * S / (Km + S)
+a1.plot(S, v, color=C["blue"], lw=2, label="억제제 없음")
+a1.plot(S, Vmax * S / (3 * Km + S), color=C["red"], lw=1.4, ls="--", label="경쟁 억제제 (겉보기 Kₘ 3배)")
+a1.axhline(Vmax, color=C["gray"], lw=0.7, ls=":")
+a1.text(6.6, 1.03, "Vₘₐₓ", fontsize=9, color=C["gray"])
+a1.plot([0, Km, Km], [0.5, 0.5, 0], color=C["gray"], lw=0.7, ls=":")
+a1.text(Km + 0.15, 0.04, "Kₘ", fontsize=9, color=C["gray"])
+a1.text(0.08, 0.6, "Vₘₐₓ/2", fontsize=7.5, color=C["gray"], va="bottom")
+a1.set_xlabel("기질 농도 [S] (Kₘ 단위)")
+a1.set_ylabel("반응 속도 v / Vₘₐₓ")
+a1.set_ylim(0, 1.15)
+a1.set_xlim(0, 10)
+a1.legend(fontsize=7.5, loc="lower right")
+a1.set_title("선형 눈금", fontsize=10)
+
+Sl = np.logspace(-2, 2.3, 400)
+a2.semilogx(Sl, Sl / (Km + Sl), color=C["blue"], lw=2)
+a2.semilogx(Sl, Sl / (3 * Km + Sl), color=C["red"], lw=1.4, ls="--")
+for s, lab in ((0.1, "0.1 Kₘ: 9%"), (1, "Kₘ: 50%"), (10, "10 Kₘ: 91%")):
+    val = s / (Km + s)
+    a2.scatter([s], [val], color=C["blue"], s=20, zorder=4)
+    a2.text(s / 1.3, val + 0.03, lab, fontsize=8, ha="right", va="bottom")
+a2.set_xlabel("기질 농도 [S] (Kₘ 단위, 로그 눈금)")
+a2.set_ylim(0, 1.15)
+a2.set_xticks([0.01, 0.1, 1, 10, 100])
+a2.set_xticklabels(["0.01", "0.1", "1", "10", "100"])
+a2.minorticks_off()
+a2.set_title("로그 눈금: S자 모양", fontsize=10)
+fig.tight_layout()
+save(fig, __file__)
