@@ -4,7 +4,7 @@ x = np.linspace(-1.75, 2.2, 400)
 
 
 def U(x, s):
-    return 10 * (x ** 2 - 1) ** 2 + s * x
+    return 9.5 * (x ** 2 - 1) ** 2 + s * x
 
 
 fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.0), sharey=True)

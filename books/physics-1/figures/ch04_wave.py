@@ -20,7 +20,7 @@ a1.legend(fontsize=8, loc="lower right", ncol=2, bbox_to_anchor=(1.0, -0.12))
 
 n = 90
 x0 = np.linspace(0, 3.2, n)
-xs = x0 - 0.045 * np.cos(2 * np.pi * x0)
+xs = x0 + 0.045 * np.cos(2 * np.pi * x0)  # 0.25, 1.25, 2.25에서 빽빽(밀)
 for xi in xs:
     a2.plot([xi, xi], [0, 1], color=C["blue"], lw=1.1)
 for c in (0.25, 1.25, 2.25):
