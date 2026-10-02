@@ -1,0 +1,33 @@
+from figstyle import plt, np, save, C
+
+iso = [("¹⁵O", 2.04, C["red"]), ("¹³N", 9.97, C["purple"]), ("¹¹C", 20.4, C["blue"]), ("¹⁸F", 109.8, C["green"])]
+t = np.linspace(0, 240, 600)
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.3, 3.1))
+for name, T, col in iso:
+    f = 0.5 ** (t / T)
+    a1.plot(t, f * 100, color=col, lw=1.8, label=f"{name} (반감기 {T:.0f}분)" if T > 3 else f"{name} (반감기 2분)")
+    a2.semilogy(t, f * 100, color=col, lw=1.8)
+a1.axhline(50, color=C["gray"], lw=0.6, ls=":")
+a1.text(236, 52, "절반", ha="right", va="bottom", fontsize=8, color=C["gray"])
+a1.scatter([109.8], [50], color=C["green"], s=18, zorder=4)
+a1.set_xlabel("시간 (분)")
+a1.set_ylabel("남은 비율 (%)")
+a1.set_xlim(0, 240)
+a1.set_ylim(0, 105)
+a1.set_xticks([0, 60, 120, 180, 240])
+a1.legend(fontsize=8, loc="upper right")
+a1.set_title("선형 눈금", fontsize=10)
+
+a2.set_xlabel("시간 (분)")
+a2.set_ylabel("남은 비율 (%, 로그 눈금)")
+a2.set_xlim(0, 240)
+a2.set_ylim(1e-2, 150)
+a2.set_xticks([0, 60, 120, 180, 240])
+a2.set_yticks([0.01, 0.1, 1, 10, 100])
+a2.set_yticklabels(["0.01", "0.1", "1", "10", "100"])
+a2.minorticks_off()
+a2.text(32, 0.013, "¹⁵O는 30분이면\n0.01% 아래로", fontsize=8, color=C["red"])
+a2.text(165, 2.2, "¹⁸F는 4시간 뒤에도\n약 22%가 남는다", fontsize=8, color=C["green"], ha="center")
+a2.set_title("로그 눈금: 붕괴는 직선이 된다", fontsize=10)
+fig.tight_layout()
+save(fig, __file__)
