@@ -37,11 +37,12 @@ strong { font-family: "Noto Sans CJK KR", sans-serif; font-weight: 700; }
 .cover-ver { margin-top: auto; font-size: 9pt; color: var(--muted); }
 
 /* 차례 */
-.toc { page-break-after: always; }
+.toc { page-break-after: always; line-height: 1.45; }
+.toc-title { margin-bottom: 0.5em; }
 .toc ul { list-style: none; padding-left: 0; }
-.toc ul ul { padding-left: 1.4em; margin: 0.1em 0 0.5em; }
+.toc ul ul { padding-left: 1.4em; margin: 0 0 0.35em; }
 .toc li.toc-ch > a { font-weight: 700; font-size: 11pt; }
-.toc li { margin: 0.15em 0; }
+.toc li { margin: 0.05em 0; }
 .toc a { color: var(--ink); text-decoration: none; }
 .toc ul ul a { color: #444; font-size: 9.5pt; }
 

@@ -1,0 +1,50 @@
+from figstyle import plt, np, save, C
+
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.4, 3.1), gridspec_kw={"width_ratios": [1, 1.35]})
+
+# (가) 에너지 준위 그림
+for y0 in (0, 0.18, 0.36):
+    a1.plot([0, 3.2], [y0, y0], color=C["ink"], lw=1.4 if y0 == 0 else 0.6)
+for y0 in (2.4, 2.58, 2.76):
+    a1.plot([0, 3.2], [y0, y0], color=C["ink"], lw=1.4 if y0 == 2.4 else 0.6)
+a1.text(3.3, 0.1, "바닥 상태", va="center", fontsize=8.5)
+a1.text(3.3, 2.5, "들뜬 상태", va="center", fontsize=8.5)
+a1.annotate("", xy=(0.4, 2.76), xytext=(0.4, 0), arrowprops=dict(arrowstyle="-|>", color=C["blue"], lw=2))
+a1.text(0.4, -0.12, "흡수\n488 nm", ha="center", va="top", fontsize=8, color=C["blue"])
+a1.annotate("", xy=(1.05, 2.4), xytext=(1.05, 2.76),
+            arrowprops=dict(arrowstyle="-|>", color=C["gray"], lw=1, ls="--"))
+a1.text(1.15, 2.95, "열로 조금 잃음", fontsize=7.5, color=C["gray"], ha="center")
+a1.annotate("", xy=(1.6, 0.18), xytext=(1.6, 2.4), arrowprops=dict(arrowstyle="-|>", color=C["green"], lw=2))
+a1.text(1.6, -0.12, "형광\n510 nm", ha="center", va="top", fontsize=8, color=C["green"])
+a1.annotate("", xy=(2.6, 1.38), xytext=(2.6, 0), arrowprops=dict(arrowstyle="-|>", color=C["red"], lw=1.6))
+a1.annotate("", xy=(2.6, 2.76), xytext=(2.6, 1.38), arrowprops=dict(arrowstyle="-|>", color=C["red"], lw=1.6))
+a1.text(2.6, -0.12, "이광자\n920 nm ×2", ha="center", va="top", fontsize=8, color=C["red"])
+a1.set_xlim(-0.2, 4.6)
+a1.set_ylim(-0.9, 3.2)
+a1.axis("off")
+a1.set_title("(가) 흡수와 형광", fontsize=9)
+
+# (나) 들뜸·방출 스펙트럼 (GFP 계열 도식)
+lam = np.linspace(380, 620, 400)
+def bump(l0, wl, wr):
+    w = np.where(lam < l0, wl, wr)
+    return np.exp(-0.5 * ((lam - l0) / w) ** 2)
+exc = bump(488, 30, 14)
+emi = bump(510, 12, 30)
+chr2 = bump(470, 35, 30)
+a2.fill_between(lam, exc, color=C["blue"], alpha=0.2, lw=0)
+a2.plot(lam, exc, color=C["blue"], lw=1.6, label="GCaMP 들뜸 (흡수)")
+a2.fill_between(lam, emi, color=C["green"], alpha=0.2, lw=0)
+a2.plot(lam, emi, color=C["green"], lw=1.6, label="GCaMP 방출 (형광)")
+a2.plot(lam, chr2, color=C["purple"], lw=1.2, ls="--", label="ChR2 활성화")
+a2.annotate("", xy=(510, 1.07), xytext=(488, 1.07), arrowprops=dict(arrowstyle="->", color=C["ink"], lw=0.8))
+a2.text(499, 1.1, "스토크스 이동", ha="center", va="bottom", fontsize=8)
+a2.set_xlabel("파장 (nm)")
+a2.set_ylabel("상대 세기")
+a2.set_yticks([])
+a2.set_ylim(0, 1.3)
+a2.set_xlim(380, 620)
+a2.legend(fontsize=7.5, loc="upper right", bbox_to_anchor=(1.02, 1.0))
+a2.set_title("(나) 들뜸과 방출 스펙트럼 (도식)", fontsize=9)
+fig.tight_layout()
+save(fig, __file__)
