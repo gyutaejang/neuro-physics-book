@@ -34,8 +34,13 @@ def run_figures(book, build_dir, only=None):
     for script in sorted(glob.glob(os.path.join(src, f"ch{only}_*.py" if only else "*.py"))):
         name = os.path.splitext(os.path.basename(script))[0]
         target = os.path.join(out, name + ".svg")
-        if os.path.exists(target) and os.path.getmtime(target) > max(
-                os.path.getmtime(script), os.path.getmtime(os.path.join(TOOLS, "figstyle.py"))):
+        # 같은 폴더의 다른 그림 스크립트를 import하면(공용 팬텀 등) 그 파일도 의존으로 본다.
+        deps = [script, os.path.join(TOOLS, "figstyle.py")]
+        for mod in re.findall(r"^\s*(?:from|import)\s+(ch\d+_\w+)", open(script, encoding="utf-8").read(), re.M):
+            dep = os.path.join(src, mod + ".py")
+            if os.path.exists(dep):
+                deps.append(dep)
+        if os.path.exists(target) and os.path.getmtime(target) > max(os.path.getmtime(d) for d in deps):
             continue
         r = subprocess.run([sys.executable, script], env=env, capture_output=True, text=True)
         if r.returncode != 0:
